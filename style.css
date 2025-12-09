@@ -76,7 +76,7 @@ nav a:hover::after {
   position: static;
   justify-self: end;
   width: 44px;
-  height: 44px;
+  height: 44px; /* make a square button */
   display: grid;
   place-items: center;
   line-height: 1;
@@ -84,7 +84,7 @@ nav a:hover::after {
   border: 1px solid #111;
   color: #111;
   padding: 0;
-  border-radius: 50%;
+  border-radius: 50%; /* make the square's border rounded so it looks like circle */
   cursor: pointer;
   font-size: 1rem;
   transition: all 0.3s;

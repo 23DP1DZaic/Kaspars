@@ -17,6 +17,12 @@
  <button class="menu-toggle" id="menuButton" aria-controls="mainNav" aria-expanded="false" aria-label="Open menu">☰</button>
  
  
+
+  <!-- Dark mode button -->
+ <button class="theme-toggle" id="themeButton">☀️</button>
+
+
+
  <!-- Navigation -->
  <nav id="mainNav">
  <a href="#">Home</a>
@@ -133,32 +139,34 @@
  // 3) Mobile DOM reorder for "Style Notes"
  
  (function() {
- const mainEl = document.querySelector('main');
- const sectionEl = mainEl.querySelector('section');
- const asideEl = mainEl.querySelector('aside');
- const heroImg = sectionEl?.querySelector('img.hero');
- const mq = window.matchMedia('(max-width: 430px)');
+  const mainEl = document.querySelector('main');
+  const sectionEl = mainEl.querySelector('section');
+  const asideEl = mainEl.querySelector('aside');
+  const heroImg = sectionEl?.querySelector('img.hero');
+  const mq = window.matchMedia('(max-width: 430px)');
  
- function moveAsideIfNeeded() {
- const isMobile = mq.matches;
- if (isMobile) {
- if (asideEl && sectionEl && heroImg && asideEl.parentElement !== sectionEl) {
- sectionEl.insertBefore(asideEl, heroImg);
- }
- } else {
- if (asideEl && mainEl && sectionEl && asideEl.parentElement !== mainEl) {
- if (sectionEl.nextElementSibling) {
- mainEl.insertBefore(asideEl, sectionEl.nextElementSibling);
- } else {
- mainEl.appendChild(asideEl);
- }
- }
- }
+  function moveAsideIfNeeded() {
+    const isMobile = mq.matches;
+    if (isMobile) {
+      if (asideEl && sectionEl && heroImg && asideEl.parentElement !== sectionEl) {
+        
+      }
+    } 
+
+    else {
+    if (asideEl && mainEl && sectionEl && asideEl.parentElement !== mainEl) {
+      if (sectionEl.nextElementSibling) {
+      mainEl.insertBefore(asideEl, sectionEl.nextElementSibling);
+      } else {
+      mainEl.appendChild(asideEl);
+      }
+    }
+  }
  }
  
  moveAsideIfNeeded();
  if (mq.addEventListener) mq.addEventListener('change', moveAsideIfNeeded);
- else if (mq.addListener) mq.addListener(moveAsideIfNeeded);
+  else if (mq.addListener) mq.addListener(moveAsideIfNeeded);
  window.addEventListener('resize', moveAsideIfNeeded);
  })();
  
@@ -168,22 +176,22 @@
  
  const products = [
  {
- name: "Wool Oversized Coat",
- description: "Structured silhouette, crafted from 100% virgin wool.",
- image: "img/img1.png",
- alt: "Jackets"
+  name: "Wool Oversized Coat",
+  description: "Structured silhouette, crafted from 100% virgin wool.",
+  image: "img/img1.png",
+  alt: "Jackets"
  },
  {
- name: "Tapered Trousers",
- description: "Refined fit. Premium cotton blend with soft stretch.",
- image: "img/img2.avif",
- alt: "Pants"
+  name: "Tapered Trousers",
+  description: "Refined fit. Premium cotton blend with soft stretch.",
+  image: "img/img2.avif",
+  alt: "Pants"
  },
  {
- name: "Classic White Shirt",
- description: "Crisp cotton poplin. Tailored for modern comfort.",
- image: "img/img3.webp",
- alt: "Shirt"
+  name: "Classic White Shirt",
+  description: "Crisp cotton poplin. Tailored for modern comfort.",
+  image: "img/img3.webp",
+  alt: "Shirt"
  }
  ];
  
@@ -206,7 +214,7 @@
  return card;
  }
  
- // 
+
  function renderProducts(filteredProducts = products) {
  if (!productContainer) return;
  productContainer.innerHTML = "";
@@ -264,7 +272,7 @@
  
  
  
- // 6) Contact form validation
+ // Contact form validation
  
  const contactForm = document.getElementById("contactForm");
  const formMessage = document.getElementById("formMessage");
@@ -280,10 +288,10 @@
  let valid = true;
  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  
- // Notīrām iepriekšējās kļūdas
+
  [name, email, message].forEach((el) => el.classList.remove("error"));
  
- // Pārbaudes
+ // Check if fields are empty
  if (name.value.trim() === "") {
  name.classList.add("error");
  valid = false;
@@ -297,7 +305,7 @@
  valid = false;
  }
  
- // Ziņojums
+ // Tell user if an error happened or if everything is ok
  if (!valid) {
  formMessage.textContent = "Please fill all fields correctly.";
  formMessage.style.color = "#e63946";
@@ -307,7 +315,7 @@
  formMessage.style.color = "#2a9d8f";
  formMessage.classList.add("show");
  
- // Notīrām lauciņus pēc brīža
+ // Clear field
  contactForm.reset();
  setTimeout(() => {
  formMessage.classList.remove("show");
