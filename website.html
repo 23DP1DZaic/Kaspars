@@ -214,7 +214,9 @@
  return card;
  }
  
-
+// Render product cards in the shop section
+// Clears old cards (if there are any), then adds each product as a new card
+// Uses all products unless a filtered list is passed
  function renderProducts(filteredProducts = products) {
  if (!productContainer) return;
  productContainer.innerHTML = "";
@@ -224,6 +226,11 @@
  });
  }
  
+
+
+// Filters products while typing in the search bar
+// Converts input to lowercase and matches product names
+// Render only the products that match
  if (searchInput) {
  searchInput.addEventListener("input", () => {
  const query = searchInput.value.toLowerCase();
@@ -233,7 +240,9 @@
  renderProducts(filtered);
  });
  }
- 
+
+
+// When the page finishes loading, show all products
  document.addEventListener("DOMContentLoaded", () => {
  renderProducts();
  });
@@ -249,16 +258,24 @@
  contact: document.getElementById("contactSection")
  };
  
+ // Selects all <a> tags inside the <nav> so they can become clickable (click event)
  const navLinks = document.querySelectorAll("nav a");
  
+
+ // Shows the chosen section and hides others
  function showSection(name) {
  for (const key in sections) {
  if (sections[key]) sections[key].hidden = key !== name;
  }
+
+ // Closes the mobile menu
  setMenuState(false);
  window.scrollTo({ top: 0, behavior: "smooth" });
  }
  
+
+ // When clicking a nav link, prevent default behavior
+// Use the link text to determine which section to show
  navLinks.forEach(link => {
  link.addEventListener("click", (e) => {
  e.preventDefault();
@@ -273,25 +290,33 @@
  
  
  // Contact form validation
- 
  const contactForm = document.getElementById("contactForm");
  const formMessage = document.getElementById("formMessage");
  
+
+// Run validation when the user submits the form
+// Prevent page refresh
  if (contactForm) {
  contactForm.addEventListener("submit", (e) => {
  e.preventDefault();
  
+// Get the name, email, and message
+// They will be checked for correctness
  const name = document.getElementById("name");
  const email = document.getElementById("email");
  const message = document.getElementById("message");
  
+// All fields are valid until else
+// Regex is used to check if email looks correct.
  let valid = true;
  const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
  
-
+// Remove any red borders that appear when form is incorrect
+// Ensure each validation starts clean
  [name, email, message].forEach((el) => el.classList.remove("error"));
  
  // Check if fields are empty
+//  If empty, mark as error
  if (name.value.trim() === "") {
  name.classList.add("error");
  valid = false;
@@ -305,12 +330,13 @@
  valid = false;
  }
  
- // Tell user if an error happened or if everything is ok
+
+ // If any field is wrong, show red error text.
  if (!valid) {
  formMessage.textContent = "Please fill all fields correctly.";
  formMessage.style.color = "#e63946";
  formMessage.classList.add("show");
- } else {
+ } else { // If everything is right, show success text
  formMessage.textContent = "✅ Message sent successfully!";
  formMessage.style.color = "#2a9d8f";
  formMessage.classList.add("show");
