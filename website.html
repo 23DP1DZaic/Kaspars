@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+ <html lang="lv">
+ <head>
+ <meta charset="UTF-8">
+ <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+ <title>NOVA WEAR</title>
+ <link rel="stylesheet" href="style.css">
+ </head>
+ <body>
+ 
+ 
+ 
+ <header>
+ <h1>NOVA WEAR</h1>
+ 
+ <!-- Burger menu button -->
+ <button class="menu-toggle" id="menuButton" aria-controls="mainNav" aria-expanded="false" aria-label="Open menu">☰</button>
+ 
+ 
+ <!-- Navigation -->
+ <nav id="mainNav">
+ <a href="#">Home</a>
+ <a href="#">Shop</a>
+ <a href="#">About</a>
+ <a href="#">Contact</a>
+ </nav>
+ <div id="overlay" aria-hidden="true"></div>
+ </header>
+ 
+ 
+ 
+ <main>
+ <!-- HOME -->
+ <section id="homeSection">
+ <h2>Welcome to NovaWear</h2>
+ <p>Minimal silhouettes and understated tones meet refined craftsmanship.
+ Discover the world of NovaWear — where modern fashion meets timeless design.</p>
+ <img class="hero" src="img/hero.jpg">
+ </section>
+ 
+ 
+ 
+ <!-- SHOP -->
+ <section id="shopSection" hidden>
+ <h2><span class="h2-line1">Shop /</span> <span class="h2-line2">Fall–Winter 2025</span></h2>
+ 
+ <input type="text" id="searchInput" placeholder="Search products..." aria-label="Search products">
+ 
+ <div class="cards" id="productContainer"></div>
+ </section>
+ 
+ 
+ 
+ <!-- ABOUT -->
+ <section id="aboutSection" hidden>
+ <h2>About NovaWear</h2>
+ <p>NovaWear is a contemporary clothing brand that celebrates simplicity and confidence. 
+ Every collection is designed to inspire modern elegance and comfort.</p>
+ </section>
+ 
+ <!-- CONTACT -->
+ <section id="contactSection" hidden>
+ <h2>Contact Us</h2>
+ <form id="contactForm" novalidate>
+ <label for="name">Name</label>
+ <input type="text" id="name" name="name" required placeholder="Your name">
+ 
+ <label for="email">Email</label>
+ <input type="email" id="email" name="email" required placeholder="you@example.com">
+ 
+ <label for="message">Message</label>
+ <textarea id="message" name="message" required placeholder="Your message..." rows="5"></textarea>
+ 
+ <button type="submit">Send Message</button>
+ 
+ <p id="formMessage" class="form-message"></p>
+ </form>
+ </section>
+ 
+ <aside>
+ <h3>Style Notes</h3>
+ <ul>
+ <li>Fall textures: wool, leather, and matte cotton.</li>
+ <li>2025 silhouette trends: volume + balance.</li>
+ <li>Layering essentials for modern minimalism.</li>
+ </ul>
+ </aside>
+ </main>
+ 
+ <footer>
+ <p>&copy; 2025 NOVA WEAR. All rights reserved.</p>
+ <p>
+ <a href="#">Instagram</a> /
+ <a href="#">TikTok</a> /
+ <a href="#">Pinterest</a>
+ </p>
+ </footer>
+ 
+ 
+ <script>
+ 
+ 
+ // Mobile burger menu
+ 
+ 
+ const menuButton = document.getElementById('menuButton');
+ const nav = document.getElementById('mainNav');
+ const overlay = document.getElementById('overlay');
+ const headerEl = document.querySelector('header');
+ 
+ function setMenuState(open) {
+ if (!menuButton || !nav || !overlay) return;
+ 
+ const headerH = headerEl ? headerEl.offsetHeight : 56;
+ document.documentElement.style.setProperty('--header-h', headerH + 'px');
+ 
+ nav.classList.toggle('active', open);
+ overlay.classList.toggle('active', open);
+ menuButton.classList.toggle('open', open);
+ 
+ menuButton.setAttribute('aria-expanded', String(open));
+ overlay.setAttribute('aria-hidden', String(!open));
+ 
+ document.body.classList.toggle('menu-open', open);
+ }
+ 
+ menuButton?.addEventListener('click', () => setMenuState(!nav.classList.contains('active')));
+ overlay?.addEventListener('click', () => setMenuState(false));
+ document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenuState(false); });
+ 
+ 
+ 
+ // 3) Mobile DOM reorder for "Style Notes"
+ 
+ (function() {
+ const mainEl = document.querySelector('main');
+ const sectionEl = mainEl.querySelector('section');
+ const asideEl = mainEl.querySelector('aside');
+ const heroImg = sectionEl?.querySelector('img.hero');
+ const mq = window.matchMedia('(max-width: 430px)');
+ 
+ function moveAsideIfNeeded() {
+ const isMobile = mq.matches;
+ if (isMobile) {
+ if (asideEl && sectionEl && heroImg && asideEl.parentElement !== sectionEl) {
+ sectionEl.insertBefore(asideEl, heroImg);
+ }
+ } else {
+ if (asideEl && mainEl && sectionEl && asideEl.parentElement !== mainEl) {
+ if (sectionEl.nextElementSibling) {
+ mainEl.insertBefore(asideEl, sectionEl.nextElementSibling);
+ } else {
+ mainEl.appendChild(asideEl);
+ }
+ }
+ }
+ }
+ 
+ moveAsideIfNeeded();
+ if (mq.addEventListener) mq.addEventListener('change', moveAsideIfNeeded);
+ else if (mq.addListener) mq.addListener(moveAsideIfNeeded);
+ window.addEventListener('resize', moveAsideIfNeeded);
+ })();
+ 
+ 
+ 
+ // Dynamic product rendering 
+ 
+ const products = [
+ {
+ name: "Wool Oversized Coat",
+ description: "Structured silhouette, crafted from 100% virgin wool.",
+ image: "img/img1.png",
+ alt: "Jackets"
+ },
+ {
+ name: "Tapered Trousers",
+ description: "Refined fit. Premium cotton blend with soft stretch.",
+ image: "img/img2.avif",
+ alt: "Pants"
+ },
+ {
+ name: "Classic White Shirt",
+ description: "Crisp cotton poplin. Tailored for modern comfort.",
+ image: "img/img3.webp",
+ alt: "Shirt"
+ }
+ ];
+ 
+ // product cards
+ const productContainer = document.getElementById("productContainer");
+ const searchInput = document.getElementById("searchInput");
+ 
+ // create a card with placeholder data
+ function createProductCard(product) {
+ const card = document.createElement("div");
+ card.classList.add("card");
+ card.innerHTML = `
+ <img src="${product.image}" alt="${product.alt}">
+ <div class="card-content">
+ <h3>${product.name}</h3>
+ <p>${product.description}</p>
+ <button>Shop Now</button>
+ </div>
+ `;
+ return card;
+ }
+ 
+ // 
+ function renderProducts(filteredProducts = products) {
+ if (!productContainer) return;
+ productContainer.innerHTML = "";
+ filteredProducts.forEach(product => {
+ const card = createProductCard(product);
+ productContainer.appendChild(card);
+ });
+ }
+ 
+ if (searchInput) {
+ searchInput.addEventListener("input", () => {
+ const query = searchInput.value.toLowerCase();
+ const filtered = products.filter(p =>
+ p.name.toLowerCase().includes(query)
+ );
+ renderProducts(filtered);
+ });
+ }
+ 
+ document.addEventListener("DOMContentLoaded", () => {
+ renderProducts();
+ });
+ 
+ 
+ 
+ // Section switching
+ 
+ const sections = {
+ home: document.getElementById("homeSection"),
+ shop: document.getElementById("shopSection"),
+ about: document.getElementById("aboutSection"),
+ contact: document.getElementById("contactSection")
+ };
+ 
+ const navLinks = document.querySelectorAll("nav a");
+ 
+ function showSection(name) {
+ for (const key in sections) {
+ if (sections[key]) sections[key].hidden = key !== name;
+ }
+ setMenuState(false);
+ window.scrollTo({ top: 0, behavior: "smooth" });
+ }
+ 
+ navLinks.forEach(link => {
+ link.addEventListener("click", (e) => {
+ e.preventDefault();
+ const text = link.textContent.trim().toLowerCase();
+ showSection(text);
+ });
+ });
+ 
+ // show Home page by default
+ showSection("home");
+ 
+ 
+ 
+ // 6) Contact form validation
+ 
+ const contactForm = document.getElementById("contactForm");
+ const formMessage = document.getElementById("formMessage");
+ 
+ if (contactForm) {
+ contactForm.addEventListener("submit", (e) => {
+ e.preventDefault();
+ 
+ const name = document.getElementById("name");
+ const email = document.getElementById("email");
+ const message = document.getElementById("message");
+ 
+ let valid = true;
+ const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+ 
+ // Notīrām iepriekšējās kļūdas
+ [name, email, message].forEach((el) => el.classList.remove("error"));
+ 
+ // Pārbaudes
+ if (name.value.trim() === "") {
+ name.classList.add("error");
+ valid = false;
+ }
+ if (!emailRegex.test(email.value.trim())) {
+ email.classList.add("error");
+ valid = false;
+ }
+ if (message.value.trim() === "") {
+ message.classList.add("error");
+ valid = false;
+ }
+ 
+ // Ziņojums
+ if (!valid) {
+ formMessage.textContent = "Please fill all fields correctly.";
+ formMessage.style.color = "#e63946";
+ formMessage.classList.add("show");
+ } else {
+ formMessage.textContent = "✅ Message sent successfully!";
+ formMessage.style.color = "#2a9d8f";
+ formMessage.classList.add("show");
+ 
+ // Notīrām lauciņus pēc brīža
+ contactForm.reset();
+ setTimeout(() => {
+ formMessage.classList.remove("show");
+ }, 3000);
+ }
+ });
+ }
+ 
+ </script>
+ </body>
+ </html>

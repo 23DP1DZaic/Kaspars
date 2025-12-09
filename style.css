@@ -1,0 +1,455 @@
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  background-color: #fff;
+  color: #111;
+  line-height: 1.6;
+  letter-spacing: 0.3px;
+  transition: background-color 0.4s, color 0.4s;
+}
+
+
+
+/* Header */
+header {
+  background: #fff;
+  border-bottom: 1px solid #ddd;
+  padding: 25px 40px;
+  position: relative;
+  z-index: 2000; /* ensure header (and its fixed children) sit above page content */
+  display: grid;
+  grid-template-columns: 44px 1fr 44px;
+  align-items: center;
+}
+
+header h1 {
+  grid-column: 2;
+  font-size: 2rem;
+  line-height: 1;
+  text-align: center;
+  font-weight: 700;
+  letter-spacing: 2px;
+  margin: 0;
+}
+
+nav {
+  text-align: center;
+  margin-top: 15px;
+}
+
+/* Ensure nav spans full header width below the title on desktop */
+header nav {
+  grid-column: 1 / -1;
+}
+
+nav a {
+  color: #111;
+  text-decoration: none;
+  margin: 0 20px;
+  font-size: 0.9rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  position: relative;
+  transition: color 0.3s;
+}
+
+nav a::after {
+  content: "";
+  position: absolute;
+  width: 0;
+  height: 1px;
+  left: 0;
+  bottom: -3px;
+  background-color: #111;
+  transition: width 0.3s ease;
+}
+
+nav a:hover::after {
+  width: 100%;
+}
+
+.theme-toggle {
+  position: static;
+  justify-self: end;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  line-height: 1;
+  background: none;
+  border: 1px solid #111;
+  color: #111;
+  padding: 0;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s;
+}
+
+.theme-toggle:hover {
+  background: #111;
+  color: #fff;
+}
+
+/* Burger menu button (hidden on desktop) */
+.menu-toggle {
+  display: none;
+  position: absolute;
+  top: 25px;
+  left: 40px;
+  background: none;
+  border: none;
+  font-size: 1.6rem;
+  cursor: pointer;
+  color: #111;
+  transition: opacity 0.3s;
+  z-index: 1002;
+  width: 44px;
+  height: 44px;
+  display: none;
+  line-height: 1;
+  display: none;
+}
+.menu-toggle:hover { opacity: 0.7; }
+body.dark .menu-toggle { color: #eee; }
+.menu-toggle.open::before { content: "✕"; font-size: 1.6rem; }
+.menu-toggle.open { font-size: 0; }
+
+/* Overlay for mobile drawer */
+#overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.3s ease;
+  z-index: 1000;
+}
+#overlay.active { opacity: 1; pointer-events: auto; }
+
+
+
+/*  */
+/* Burger menu */
+/*  */
+
+
+
+/* Dark mode */
+
+
+
+/* Main */
+main {
+  display: flex;
+  justify-content: space-between;
+  padding: 40px 60px;
+  gap: 40px;
+}
+
+section {
+  flex: 3;
+}
+
+section h2 {
+  font-size: 1.5rem;
+  font-weight: 600;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+section p {
+  max-width: 600px;
+  color: #555;
+}
+
+img.hero {
+  width: 100%;
+  margin-top: 20px;
+  border-radius: 0;
+  filter: grayscale(10%);
+}
+
+
+
+/* Cards */
+.cards {
+  display: flex;
+  gap: 30px;
+  margin-top: 50px;
+  justify-content: center;
+}
+
+.card {
+  width: 320px;
+  background-color: #fafafa;
+  overflow: hidden;
+  border: 1px solid #ddd;
+  transition: transform 0.5s ease, box-shadow 0.4s ease;
+}
+
+.card img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 4 / 5;
+  object-fit: cover;
+  transition: transform 0.5s ease;
+}
+
+.card-content {
+  padding: 20px;
+}
+
+.card h3 {
+  font-size: 1.1rem;
+  margin: 0 0 10px 0;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+.card p {
+  font-size: 0.9rem;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.card button {
+  background: #111;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  letter-spacing: 0.5px;
+  cursor: pointer;
+  transition: all 0.3s;
+}
+
+.card button:hover {
+  background: #333;
+}
+
+.card:hover img {
+  transform: scale(1.05);
+}
+
+.card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+
+
+/* ====== Aside ====== */
+aside {
+  flex: 1;
+  border-left: 1px solid #ddd;
+  padding-left: 30px;
+}
+
+aside h3 {
+  font-size: 1rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  margin-bottom: 15px;
+}
+
+aside ul {
+  list-style: none;
+  padding: 0;
+}
+
+aside li {
+  margin-bottom: 10px;
+  color: #555;
+}
+
+
+
+/* ====== Footer ====== */
+footer {
+  text-align: center;
+  padding: 40px 20px;
+  font-size: 0.9rem;
+  border-top: 1px solid #ddd;
+}
+
+footer a {
+  color: #111;
+  text-decoration: none;
+  margin: 0 8px;
+  transition: color 0.3s;
+}
+
+footer a:hover {
+  color: #555;
+}
+
+/* Prevent background scroll when menu is open */
+body.menu-open {
+  overflow: hidden;
+}
+
+
+
+
+/* Fade in */
+@keyframes fadeUp {
+  0% {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+
+
+
+/* Piemēro fade-in dažādām sadaļām */
+header, section, aside, footer {
+  animation: fadeUp 0.8s ease-out forwards;
+  opacity: 0;
+}
+
+/* Aizture, lai elementi parādās secīgi */
+header {
+  animation-delay: 0.1s;
+}
+
+section {
+  animation-delay: 0.3s;
+}
+
+.cards .card:nth-child(1) {
+  animation: fadeUp 1s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+.cards .card:nth-child(2) {
+  animation: fadeUp 1s ease-out 0.6s forwards;
+  opacity: 0;
+}
+
+.cards .card:nth-child(3) {
+  animation: fadeUp 1s ease-out 0.8s forwards;
+  opacity: 0;
+}
+
+aside {
+  animation-delay: 1s;
+}
+
+footer {
+  animation-delay: 1.2s;
+}
+
+/* ===== Responsive: phones (5 popular sizes) ===== */
+/* Base utilities for mobile rendering */
+html { -webkit-text-size-adjust: 100%; }
+img, video { max-width: 100%; height: auto; display: block; }
+
+/* Common phone layout up to 430px (covers iPhone 15 Pro Max and below) */
+@media (max-width: 430px) {
+  header {
+    padding: 12px calc(16px + env(safe-area-inset-right)) 12px calc(16px + env(safe-area-inset-left));
+  }
+  header h1 { grid-column: 2; text-align: center; font-size: 1.6rem; line-height: 1; }
+  /* Place controls aligned with title */
+  .menu-toggle { display: block; position: static; width: 44px; height: 44px; justify-self: start; grid-column: 1; display: grid; place-items: center; line-height: 1; }
+  .theme-toggle { position: static; width: 44px; height: 44px; justify-self: end; grid-column: 3; display: grid; place-items: center; line-height: 1; }
+  /* Hide theme button while menu is open */
+  body.menu-open .theme-toggle { visibility: hidden; opacity: 0; pointer-events: none; }
+  /* X stays where burger is (header left) */
+  .menu-toggle.open { position: static; font-size: 0; }
+  .menu-toggle.open::before { content: "✕"; font-size: 1.6rem; }
+  nav {
+    position: fixed;
+    top: var(--header-h, 56px);
+    left: 0;
+    width: 100%;
+    max-width: none;
+    height: calc(100vh - var(--header-h, 56px));
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: flex-start;
+    gap: 0;
+    transition: transform 0.35s ease;
+    transform: translateX(-100%);
+    z-index: 1500; /* beneath header (2000) but above overlay (1000) */
+    padding: 12px 24px 24px calc(16px + env(safe-area-inset-left));
+    margin-top: 0; /* override base nav margin */
+    pointer-events: none;
+  }
+  nav.active { transform: translateX(0); pointer-events: auto; }
+  body.dark nav { background-color: #0a0a0a; }
+  nav a { display: block; margin: 0; font-size: 1.15rem; width: 100%; text-align: left; padding: 16px 4px; border-bottom: 1px solid #eee; }
+  body.dark nav a { border-bottom-color: #222; }
+
+  main {
+    padding: 20px 16px;
+    gap: 24px;
+    flex-direction: column;
+  }
+  section p { max-width: 100%; }
+  img.hero { border-radius: 0; }
+
+  .cards { display: grid; grid-template-columns: 1fr; gap: 16px; margin-top: 24px; }
+  .card { width: 100%; max-width: 100%; margin: 0; }
+  .card img { height: auto; aspect-ratio: 4 / 5; object-fit: cover; }
+
+  aside {
+    border-left: none;
+    border-top: 1px solid #ddd;
+    padding-left: 0;
+    padding-top: 20px;
+    margin-top: 10px;
+  }
+
+  footer { padding: 24px 16px; }
+
+  /* Reorder animation timing so Style Notes appears before images */
+  aside { animation-delay: 0.35s !important; }
+  img.hero { opacity: 0; animation: fadeUp 0.7s ease-out 0.5s forwards; }
+  .cards .card:nth-child(1) { animation-delay: 0.7s !important; }
+  .cards .card:nth-child(2) { animation-delay: 0.85s !important; }
+  .cards .card:nth-child(3) { animation-delay: 1s !important; }
+
+  /* Force H2 to split into two lines on mobile */
+  section h2 .h2-line2 { display: block; margin-top: 2px; }
+
+  /* Overlay should start below the visible header and match drawer height */
+  #overlay { top: var(--header-h, 56px); height: calc(100vh - var(--header-h, 56px)); }
+}
+
+/* iPhone 12/13/14 (390 x 844) */
+@media (max-width: 390px) {
+  header h1 { font-size: 1.5rem; letter-spacing: 1px; }
+  .card-content { padding: 16px; }
+  .card h3 { font-size: 1rem; }
+  .card p { font-size: 0.95rem; }
+  .card button { width: 100%; min-height: 44px; padding: 12px 16px; }
+}
+
+/* iPhone SE 2/3 (375 x 667) */
+@media (max-width: 375px) {
+  header h1 { font-size: 1.4rem; }
+  nav a { margin: 0 8px; font-size: 0.95rem; }
+}
+
+/* Galaxy S series common (360 x 800) */
+@media (max-width: 360px) {
+  header { padding: 12px calc(12px + env(safe-area-inset-right)) 12px calc(12px + env(safe-area-inset-left)); }
+  main { padding: 16px 12px; gap: 16px; }
+  .card-content { padding: 14px; }
+}
