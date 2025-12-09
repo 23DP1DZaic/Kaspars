@@ -104,11 +104,17 @@
  
  
  <script>
- 
+ // Dark mode
+ const themeButton = document.getElementById('themeButton');
+
+themeButton.addEventListener('click', () => { // On click, do action
+  document.body.classList.toggle('dark'); // Toggle the class dark on body
+  themeButton.textContent = document.body.classList.contains('dark') ? '🌙' : '☀️';
+}); // Switch the button icon depending on theme
+
+
  
  // Mobile burger menu
- 
- 
  const menuButton = document.getElementById('menuButton');
  const nav = document.getElementById('mainNav');
  const overlay = document.getElementById('overlay');

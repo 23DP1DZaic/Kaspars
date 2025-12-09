@@ -136,15 +136,61 @@ body.dark .menu-toggle { color: #eee; }
 
 
 
-/*  */
-/* Burger menu */
-/*  */
+
+/* Dark Mode */
 
 
 
-/* Dark mode */
+body.dark {
+  background-color: #0a0a0a;
+  color: #eee;
+}
 
+body.dark header,
+body.dark footer {
+  background-color: #0a0a0a;
+  border-color: #222;
+}
 
+body.dark nav a {
+  color: #eee;
+}
+
+body.dark nav a::after {
+  background-color: #eee;
+}
+
+body.dark .card {
+  background-color: #111;
+  border-color: #222;
+}
+
+body.dark .card p {
+  color: #ccc;
+}
+
+body.dark .card button {
+  background-color: #eee;
+  color: #111;
+}
+
+body.dark .card button:hover {
+  background-color: #bbb;
+}
+
+body.dark .theme-toggle {
+  border-color: #eee;
+  color: #eee;
+}
+
+body.dark .theme-toggle:hover {
+  background-color: #eee;
+  color: #000;
+}
+
+body.dark a {
+    color: #eee;
+}
 
 /* Main */
 main {
