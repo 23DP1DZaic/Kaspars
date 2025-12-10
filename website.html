@@ -83,14 +83,14 @@
  </form>
  </section>
  
- <aside>
- <h3>Style Notes</h3>
- <ul>
- <li>Fall textures: wool, leather, and matte cotton.</li>
- <li>2025 silhouette trends: volume + balance.</li>
- <li>Layering essentials for modern minimalism.</li>
- </ul>
- </aside>
+<aside id="styleNotes">
+    <h3>Style Notes</h3>
+    <ul>
+        <li>Fall textures: wool, leather, and matte cotton.</li>
+        <li>2025 silhouette trends: volume + balance.</li>
+        <li>Layering essentials for modern minimalism.</li>
+    </ul>
+</aside>
  </main>
  
  <footer>
@@ -269,10 +269,16 @@ themeButton.addEventListener('click', () => { // On click, do action
  
 
  // Shows the chosen section and hides others
- function showSection(name) {
- for (const key in sections) {
- if (sections[key]) sections[key].hidden = key !== name;
- }
+function showSection(name) {
+    for (const key in sections) {
+        if (sections[key]) sections[key].hidden = key !== name;
+    }
+
+    // Show aside only on Home or Shop
+    const aside = document.getElementById("styleNotes");
+    if (aside) {
+        aside.hidden = !(name === "home" || name === "shop");
+    }
 
  // Closes the mobile menu
  setMenuState(false);
