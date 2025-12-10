@@ -120,6 +120,7 @@ themeButton.addEventListener('click', () => { // On click, do action
  const overlay = document.getElementById('overlay');
  const headerEl = document.querySelector('header');
  
+ // Toggle mobile menu open / closed state
  function setMenuState(open) {
  if (!menuButton || !nav || !overlay) return;
  
@@ -136,8 +137,11 @@ themeButton.addEventListener('click', () => { // On click, do action
  document.body.classList.toggle('menu-open', open);
  }
  
+ // Click menu button to toggle menu state (open/close)
  menuButton?.addEventListener('click', () => setMenuState(!nav.classList.contains('active')));
+//  Click background to close menu
  overlay?.addEventListener('click', () => setMenuState(false));
+//  Press escape to close menu
  document.addEventListener('keydown', (e) => { if (e.key === 'Escape') setMenuState(false); });
  
  
@@ -158,6 +162,7 @@ themeButton.addEventListener('click', () => { // On click, do action
     const activeSection = document.querySelector('section:not([hidden])');
     
     if (!activeSection || !asideEl) return;
+    // Guard clause: exit early if required elements are missing, prevent errors
     
     if (isMobile) {
       // On mobile: insert aside after the active section
@@ -173,15 +178,16 @@ themeButton.addEventListener('click', () => { // On click, do action
   }
   
   moveAsideIfNeeded();
-  
-  // Listen for section changes (when user clicks nav links)
+// MutationObserver tracks section visibility for navigation changes (when user clicks nav links)
+// Resize listener ensures proper aside placement across screen sizes
   const observer = new MutationObserver(moveAsideIfNeeded);
   const sections = document.querySelectorAll('section');
   sections.forEach(section => {
     observer.observe(section, { attributes: true, attributeFilter: ['hidden'] });
   });
   
-  // Listen for window resize
+
+  // Re-position aside when window is resized
   window.addEventListener('resize', moveAsideIfNeeded);
 })();
  
