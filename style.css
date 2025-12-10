@@ -238,6 +238,65 @@ img.hero {
 
 
 
+/* Search button */
+#searchInput {
+  width: 100%;
+  max-width: 400px;
+  padding: 16px;
+  font-family: 'Helvetica Neue', Arial, sans-serif;
+  font-size: 1rem;
+  border: 1px solid #111;
+  background-color: transparent;
+  color: #111;
+  transition: all 0.3s ease;
+  margin: 15px 0 0;
+  display: block;
+  border-radius: 0;
+  -webkit-appearance: none;
+  letter-spacing: 0.5px;
+}
+
+#searchInput:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1);
+  border-color: #333;
+}
+
+#searchInput::placeholder {
+  color: #777;
+  opacity: 1;
+  letter-spacing: 0.5px;
+}
+
+/* Dark mode styles */
+body.dark #searchInput {
+  border-color: #eee;
+  color: #eee;
+  background-color: transparent;
+}
+
+body.dark #searchInput:focus {
+  border-color: #ddd;
+  box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.1);
+}
+
+body.dark #searchInput::placeholder {
+  color: #aaa;
+}
+
+/* Search input container positioning */
+#shopSection {
+  position: relative;
+}
+
+/* Animation for search input */
+#searchInput {
+  animation: fadeUp 0.8s ease-out 0.4s forwards;
+  opacity: 0;
+}
+
+
+
 /* Cards */
 .cards {
   display: flex;
