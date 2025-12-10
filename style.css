@@ -12,7 +12,13 @@ body {
   transition: background-color 0.4s, color 0.4s;
 }
 
+#aboutSection {
+    min-height: 40vh; /* 80% of the viewport height */
+}
 
+#aboutSection p {
+  max-width: 1000px; 
+}
 
 /* Header */
 header {
