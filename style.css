@@ -192,6 +192,13 @@ body.dark a {
     color: #eee;
 }
 
+body.dark p {
+  color: #bbb;
+}
+
+body.dark li {
+  color: #bbb;
+}
 /* Main */
 main {
   display: flex;
