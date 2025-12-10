@@ -658,8 +658,411 @@ footer {
   animation-delay: 1.2s;
 }
 
-/* ===== Responsive: phones (5 popular sizes) ===== */
-/* Base utilities for mobile rendering */
-html { -webkit-text-size-adjust: 100%; }
-img, video { max-width: 100%; height: auto; display: block; }
+/* Ensure theme toggle button is clickable on mobile */
+@media (max-width: 768px) {
+  .theme-toggle {
+    z-index: 1003; /* Higher than nav and overlay */
+    position: relative;
+  }
+}
 
+
+/* ====== RESPONSIVE DESIGN ====== */
+
+/* Base mobile adjustments */
+@media (max-width: 768px) {
+  /* General adjustments */
+  body {
+    font-size: 15px;
+    line-height: 1.5;
+  }
+  
+  /* Header adjustments */
+  header {
+    padding: 15px 20px;
+    grid-template-columns: auto 1fr auto;
+    gap: 10px;
+  }
+  
+  header h1 {
+    font-size: 1.5rem;
+    letter-spacing: 1px;
+  }
+  
+  /* Show burger menu on mobile */
+  .menu-toggle {
+    display: block;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 20px;
+  }
+  
+  /* Hide desktop navigation, show mobile drawer */
+  nav {
+    position: fixed;
+    top: var(--header-h, 80px);
+    left: 0;
+    width: 100%;
+    background: #fff;
+    border-bottom: 1px solid #ddd;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    transform: translateY(-100%);
+    opacity: 0;
+    transition: transform 0.3s ease, opacity 0.3s ease;
+    z-index: 1001;
+  }
+  
+  nav.active {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  
+  nav a {
+    margin: 10px 0;
+    font-size: 1rem;
+    padding: 8px 0;
+    width: 100%;
+    text-align: center;
+  }
+  
+  nav a::after {
+    display: none;
+  }
+  
+  /* Dark mode for mobile nav */
+  body.dark nav {
+    background: #0a0a0a;
+    border-color: #222;
+  }
+  
+  /* Theme toggle adjustments */
+  .theme-toggle {
+    width: 40px;
+    height: 40px;
+    font-size: 0.9rem;
+  }
+  
+  /* Main content adjustments */
+  main {
+    flex-direction: column;
+    padding: 20px;
+    gap: 30px;
+  }
+  
+  /* Section adjustments */
+  section {
+    width: 100%;
+  }
+  
+  section h2 {
+    font-size: 1.3rem;
+  }
+  
+  /* Hero image adjustments */
+  img.hero {
+    margin-top: 15px;
+  }
+  
+  /* Cards grid adjustments */
+  .cards {
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+    margin-top: 30px;
+  }
+  
+  .card {
+    width: 100%;
+    max-width: 400px;
+  }
+  
+  /* About section adjustments */
+  #aboutSection {
+    min-height: auto;
+    padding-bottom: 40px;
+  }
+  
+  #aboutSection p {
+    max-width: 100%;
+  }
+  
+  /* Contact form adjustments */
+  #contactForm {
+    gap: 18px;
+  }
+  
+  #contactForm button[type="submit"] {
+    width: 100%;
+    text-align: center;
+  }
+  
+  /* Aside adjustments */
+  aside {
+    border-left: none;
+    border-top: 1px solid #ddd;
+    padding-left: 0;
+    padding-top: 30px;
+    margin-top: 30px;
+  }
+  
+  aside h3 {
+    font-size: 1rem;
+  }
+  
+  /* Footer adjustments */
+  footer {
+    padding: 30px 15px;
+  }
+  
+  footer p {
+    margin: 10px 0;
+  }
+}
+
+
+/* Small phones (iPhone SE, iPhone 5/5s: 320px-375px) */
+@media (max-width: 375px) {
+  /* Even smaller padding for tiny screens */
+  header {
+    padding: 12px 15px;
+  }
+  
+  header h1 {
+    font-size: 1.3rem;
+  }
+  
+  .menu-toggle {
+    left: 15px;
+    font-size: 1.4rem;
+    width: 36px;
+    height: 36px;
+  }
+  
+  .theme-toggle {
+    width: 36px;
+    height: 36px;
+    font-size: 0.8rem;
+  }
+  
+  main {
+    padding: 15px;
+  }
+  
+  /* Shop section heading for small screens */
+  #shopSection h2 {
+    font-size: 1.2rem;
+  }
+  
+  .h2-line1, .h2-line2 {
+    display: block;
+  }
+  
+  /* Search input adjustments */
+  #searchInput {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  /* Card adjustments for small screens */
+  .card-content {
+    padding: 15px;
+  }
+  
+  .card h3 {
+    font-size: 1rem;
+  }
+  
+  .card p {
+    font-size: 0.85rem;
+  }
+  
+  .card button {
+    padding: 8px 16px;
+    font-size: 0.85rem;
+  }
+  
+  /* Contact form adjustments */
+  #contactForm input,
+  #contactForm textarea {
+    padding: 12px;
+    font-size: 14px;
+  }
+  
+  #contactForm button[type="submit"] {
+    padding: 12px 24px;
+    font-size: 0.85rem;
+  }
+  
+  /* Footer text adjustments */
+  footer {
+    font-size: 0.8rem;
+    padding: 20px 10px;
+  }
+  
+  footer a {
+    margin: 0 5px;
+  }
+}
+
+/* Medium phones (iPhone 6/7/8, iPhone X, most Android: 376px-430px) */
+@media (min-width: 376px) and (max-width: 430px) {
+  header h1 {
+    font-size: 1.4rem;
+  }
+  
+  #shopSection h2 {
+    font-size: 1.25rem;
+  }
+  
+  /* Keep search input at full width but with better spacing */
+  #searchInput {
+    margin: 12px 0 0;
+  }
+  
+  /* Cards can be slightly wider */
+  .card {
+    max-width: 350px;
+  }
+}
+
+/* Tablet adjustments (iPad: 768px-1024px) */
+@media (min-width: 769px) and (max-width: 1024px) {
+  /* Slightly reduce padding on tablets */
+  header {
+    padding: 20px 30px;
+  }
+  
+  main {
+    padding: 30px 40px;
+  }
+  
+  /* Adjust card layout for tablets */
+  .cards {
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .card {
+    width: calc(50% - 15px);
+    min-width: 280px;
+  }
+  
+  /* About section text width */
+  #aboutSection p {
+    max-width: 800px;
+  }
+}
+
+/* Prevent animation delays on mobile for better performance */
+@media (max-width: 768px) {
+  header, section, aside, footer,
+  .cards .card,
+  #contactForm {
+    animation-delay: 0s !important;
+    animation-duration: 0.5s !important;
+  }
+}
+
+/* Fix for landscape mode on mobile */
+@media (max-height: 500px) and (max-width: 900px) {
+  /* Reduce vertical padding in landscape */
+  header {
+    padding: 10px 20px;
+  }
+  
+  main {
+    padding: 15px 20px;
+  }
+  
+  /* Make cards layout horizontal in landscape for better use of space */
+  .cards {
+    flex-direction: row;
+    flex-wrap: wrap;
+    gap: 15px;
+  }
+  
+  .card {
+    width: calc(50% - 10px);
+    min-width: auto;
+  }
+  
+  /* Reduce image height in cards for landscape */
+  .card img {
+    aspect-ratio: 3 / 4;
+  }
+}
+
+/* Fix for very small height screens */
+@media (max-height: 600px) {
+  /* Reduce section heights */
+  #aboutSection {
+    min-height: auto;
+    padding-bottom: 30px;
+  }
+  
+  /* Reduce hero image margin */
+  img.hero {
+    margin-top: 10px;
+  }
+}
+
+/* High-resolution displays (Retina) */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  /* Ensure images are crisp */
+  img {
+    image-rendering: -webkit-optimize-contrast;
+    image-rendering: crisp-edges;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  /* Make touch targets larger */
+  nav a {
+    padding: 12px 0;
+  }
+  
+  .card button,
+  #contactForm button[type="submit"],
+  .theme-toggle,
+  .menu-toggle {
+    min-height: 44px; /* Apple's recommended minimum touch target size */
+  }
+  
+  /* Remove hover effects on touch devices */
+  .card:hover {
+    transform: none;
+  }
+  
+  .card:hover img {
+    transform: none;
+  }
+  
+  /* Add active states for touch feedback */
+  .card button:active,
+  #contactForm button[type="submit"]:active,
+  .theme-toggle:active {
+    transform: scale(0.98);
+    opacity: 0.8;
+  }
+}
+
+/* Accessibility: reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+  
+  /* Still allow essential transitions */
+  nav.active,
+  #overlay.active {
+    transition-duration: 0.1s;
+  }
+}

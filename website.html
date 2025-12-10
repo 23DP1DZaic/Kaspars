@@ -104,8 +104,8 @@
  
  
  <script>
- // Dark mode
- const themeButton = document.getElementById('themeButton');
+// Dark mode
+const themeButton = document.getElementById('themeButton');
 
 themeButton.addEventListener('click', () => { // On click, do action
   document.body.classList.toggle('dark'); // Toggle the class dark on body
@@ -142,39 +142,48 @@ themeButton.addEventListener('click', () => { // On click, do action
  
  
  
- // 3) Mobile DOM reorder for "Style Notes"
- 
- (function() {
-  const mainEl = document.querySelector('main');
-  const sectionEl = mainEl.querySelector('section');
-  const asideEl = mainEl.querySelector('aside');
-  const heroImg = sectionEl?.querySelector('img.hero');
-  const mq = window.matchMedia('(max-width: 430px)');
- 
-  function moveAsideIfNeeded() {
-    const isMobile = mq.matches;
-    if (isMobile) {
-      if (asideEl && sectionEl && heroImg && asideEl.parentElement !== sectionEl) {
-        
-      }
-    } 
 
-    else {
-    if (asideEl && mainEl && sectionEl && asideEl.parentElement !== mainEl) {
-      if (sectionEl.nextElementSibling) {
-      mainEl.insertBefore(asideEl, sectionEl.nextElementSibling);
-      } else {
-      mainEl.appendChild(asideEl);
+ 
+// Improved mobile DOM reorder for "Style Notes"
+(function() {
+  const mainEl = document.querySelector('main');
+  const asideEl = mainEl?.querySelector('aside');
+  const homeSection = document.getElementById('homeSection');
+  const shopSection = document.getElementById('shopSection');
+  
+  if (!mainEl || !asideEl) return;
+  
+  function moveAsideIfNeeded() {
+    const isMobile = window.innerWidth <= 768;
+    const activeSection = document.querySelector('section:not([hidden])');
+    
+    if (!activeSection || !asideEl) return;
+    
+    if (isMobile) {
+      // On mobile: insert aside after the active section
+      if (asideEl.parentElement !== activeSection) {
+        activeSection.appendChild(asideEl);
+      }
+    } else {
+      // On desktop: put aside back in main after the active section
+      if (asideEl.parentElement !== mainEl) {
+        mainEl.appendChild(asideEl);
       }
     }
   }
- }
- 
- moveAsideIfNeeded();
- if (mq.addEventListener) mq.addEventListener('change', moveAsideIfNeeded);
-  else if (mq.addListener) mq.addListener(moveAsideIfNeeded);
- window.addEventListener('resize', moveAsideIfNeeded);
- })();
+  
+  moveAsideIfNeeded();
+  
+  // Listen for section changes (when user clicks nav links)
+  const observer = new MutationObserver(moveAsideIfNeeded);
+  const sections = document.querySelectorAll('section');
+  sections.forEach(section => {
+    observer.observe(section, { attributes: true, attributeFilter: ['hidden'] });
+  });
+  
+  // Listen for window resize
+  window.addEventListener('resize', moveAsideIfNeeded);
+})();
  
  
  
@@ -254,50 +263,42 @@ themeButton.addEventListener('click', () => { // On click, do action
  });
  
  
- 
- // Section switching
- 
- const sections = {
- home: document.getElementById("homeSection"),
- shop: document.getElementById("shopSection"),
- about: document.getElementById("aboutSection"),
- contact: document.getElementById("contactSection")
- };
- 
- // Selects all <a> tags inside the <nav> so they can become clickable (click event)
- const navLinks = document.querySelectorAll("nav a");
- 
+// Section switching
+const sections = {
+  home: document.getElementById("homeSection"),
+  shop: document.getElementById("shopSection"),
+  about: document.getElementById("aboutSection"),
+  contact: document.getElementById("contactSection")
+};
 
- // Shows the chosen section and hides others
+// Show the chosen section and hide others
 function showSection(name) {
-    for (const key in sections) {
-        if (sections[key]) sections[key].hidden = key !== name;
-    }
+  for (const key in sections) {
+    if (sections[key]) sections[key].hidden = key !== name;
+  }
 
-    // Show aside only on Home or Shop
-    const aside = document.getElementById("styleNotes");
-    if (aside) {
-        aside.hidden = !(name === "home" || name === "shop");
-    }
+  // Show aside only on Home or Shop
+  const aside = document.getElementById("styleNotes");
+  if (aside) {
+    aside.hidden = !(name === "home" || name === "shop");
+  }
 
- // Closes the mobile menu
- setMenuState(false);
- window.scrollTo({ top: 0, behavior: "smooth" });
- }
- 
+  // Close the mobile menu
+  setMenuState(false);
+  window.scrollTo({ top: 0, behavior: "smooth" });
+}
 
- // When clicking a nav link, prevent default behavior
-// Use the link text to determine which section to show
- navLinks.forEach(link => {
- link.addEventListener("click", (e) => {
- e.preventDefault();
- const text = link.textContent.trim().toLowerCase();
- showSection(text);
- });
- });
- 
- // show Home page by default
- showSection("home");
+// Add click events ONLY to nav links (not buttons)
+document.querySelectorAll("nav a").forEach(link => {
+  link.addEventListener("click", (e) => {
+    e.preventDefault();
+    const text = link.textContent.trim().toLowerCase();
+    showSection(text);
+  });
+});
+
+// Show Home page by default
+showSection("home");
  
  
  
